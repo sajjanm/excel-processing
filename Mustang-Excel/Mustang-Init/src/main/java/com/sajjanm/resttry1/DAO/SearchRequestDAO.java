@@ -17,7 +17,7 @@ public interface SearchRequestDAO {
 
     public ExcelFileDetail getByPartNumber(String partNumber);
 
-    public List<ExcelFileDetail> searchQuery(SearchRequestNew searchRequest);
+    public List<ExcelFileDetail> getBySearchQuery (SearchRequestNew searchRequest);
     
     public List<ExcelFileDetail> getByVendor(SearchRequestNew searchRequest);
 

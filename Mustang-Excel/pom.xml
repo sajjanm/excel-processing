@@ -7,7 +7,6 @@
   <packaging>pom</packaging>
   <name>Mustang-Excel</name>
   <modules>
-    <module>Ingram-common</module>
     <module>Mustang-ear</module>
     <module>Mustang-Init</module>
     <module>Mustang</module>

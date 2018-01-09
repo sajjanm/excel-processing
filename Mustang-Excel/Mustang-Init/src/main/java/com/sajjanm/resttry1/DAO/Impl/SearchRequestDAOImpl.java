@@ -9,6 +9,7 @@ import com.sajjanm.ingarm.request.SearchRequestNew;
 import com.sajjanm.resttry1.DAO.SearchRequestDAO;
 import com.sajjanm.resttry1.entity.ExcelFileDetail;
 import java.util.List;
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -17,6 +18,7 @@ import javax.persistence.Query;
  *
  * @author sajjan
  */
+@Stateless
 public class SearchRequestDAOImpl implements SearchRequestDAO {
 
     @PersistenceContext(unitName = "IngramPU")
@@ -30,18 +32,25 @@ public class SearchRequestDAOImpl implements SearchRequestDAO {
     }
 
     @Override
-    public List<ExcelFileDetail> searchQuery(SearchRequestNew searchRequest) {
+    public List<ExcelFileDetail> getBySearchQuery(SearchRequestNew searchRequest) {
+
         Query query = em.createQuery("SELECT EFD FROM ExcelFileDetail EFD WHERE EFD.partDesc LIKE :partDesc OR EFD.price =:price OR EFD.partNumber =:partNumber OR EFD.vendor =:vendor");
 
         query = setPagination(query, searchRequest);
-        
-        return (List<ExcelFileDetail>) query
-                .setParameter("partDesc", "%" + searchRequest.getSearchValue() + "%")
+
+        query.setParameter("partDesc", "%" + searchRequest.getSearchValue() + "%")
                 .setParameter("partNumber", searchRequest.getSearchValue())
                 .setParameter("price", searchRequest.getSearchValue())
-                .setParameter("vendor", searchRequest.getSearchValue())
-                .getResultList();
-    
+                .setParameter("vendor", searchRequest.getSearchValue());
+
+        System.out.println("search query :::: " + query);
+
+        System.out.println("");
+        System.out.println((List<ExcelFileDetail>) query.getResultList());
+        System.out.println("");
+        
+        return (List<ExcelFileDetail>) query.getResultList();
+
     }
 
     @Override
@@ -49,10 +58,10 @@ public class SearchRequestDAOImpl implements SearchRequestDAO {
         Query query = em.createQuery("SELECT EFD FROM ExcelFileDetail EFD WHERE EFD.vendor =:vendor");
 
         query = setPagination(query, searchRequest);
-        
-        return (List<ExcelFileDetail>) query
-                .setParameter("vendor", searchRequest.getSearchValue())
-                .getResultList();
+
+        query.setParameter("vendor", searchRequest.getVendor());
+
+        return (List<ExcelFileDetail>) query.getResultList();
     }
 
     @Override
@@ -61,8 +70,8 @@ public class SearchRequestDAOImpl implements SearchRequestDAO {
 
         query = setPagination(query, searchRequest);
 
-        return (List<ExcelFileDetail>) query.setParameter("customerPriceChangeFlag", "X")
-                .getResultList();
+        query.setParameter("customerPriceChangeFlag", "X");
+        return (List<ExcelFileDetail>) query.getResultList();
 
     }
 

@@ -5,7 +5,9 @@
  */
 package com.sajjanm.resttry1.resources;
 
+import com.sajjanm.ingarm.request.SearchRequestNew;
 import com.sajjanm.resttry1.Service.ExcelFileDetailService;
+import com.sajjanm.resttry1.Service.SearchRequestService;
 import com.sajjanm.resttry1.request.SearchRequest;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -27,6 +29,9 @@ public class SearchResources {
 
     @Inject
     private ExcelFileDetailService excelFileDetailService;
+    
+    @Inject
+    private SearchRequestService requestService;
 
     @GET
     @Path("/SEARCH")
@@ -49,5 +54,10 @@ public class SearchResources {
     @POST
     public Response getPopularProduct() {
         return Response.ok(excelFileDetailService.getPopularProduct()).build();
+    }
+    
+    @POST
+    public Response productLookup(SearchRequestNew request){
+        return Response.ok(requestService.productLookup(request)).build();
     }
 }

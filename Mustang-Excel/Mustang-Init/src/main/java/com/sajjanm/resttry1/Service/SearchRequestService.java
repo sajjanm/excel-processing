@@ -5,10 +5,15 @@
  */
 package com.sajjanm.resttry1.Service;
 
+import com.sajjanm.ingarm.request.SearchRequestNew;
+import com.sajjanm.ingarm.response.SearchProductResponse;
+
 /**
  *
  * @author sajjan
  */
 public interface SearchRequestService {
+
+    public SearchProductResponse productLookup(SearchRequestNew searchRequest);
     
 }
